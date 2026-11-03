@@ -10,6 +10,9 @@
   <main>
     <h1>I miei task</h1>
 
+    <!-- Contenitore per il messaggio di benvenuto persistente -->
+    <div id="benvenuto"></div>
+
     <form id="form-task">
       <input
         type="text"
@@ -21,7 +24,12 @@
 
     <ul id="lista"></ul>
 
+    <!-- Barra info totale e messaggio reattivo -->
     <p id="info"></p>
+    <p id="messaggio"></p>
+
+    <!-- Contenitore per il pulsante "Elimina completati" -->
+    <div id="azioni"></div>
   </main>
 
   <script type="module" src="/src/main.js"></script>
