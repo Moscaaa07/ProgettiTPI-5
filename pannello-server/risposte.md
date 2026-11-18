@@ -1,0 +1,10 @@
+# Risposte sul flusso dei dati
+
+### 1. Il pulsante «Riavvia»
+Non si fa perché in React le props sono di **sola lettura** (immutabili) e vige il **flusso unidirezionale dei dati** (dall'alto verso il basso): un componente figlio come `SchedaServer` non deve mai modificare direttamente l'oggetto che riceve dal genitore. Il dato `online` vive nel componente radice `App` (che importa `servers`), ed è `App` che dovrebbe occuparsi di aggiornarlo. Alla fine della settimana 7 ci manca ancora il concetto di **stato** (`useState`) e la gestione degli eventi, che permettono a React di memorizzare cambiamenti nel tempo e ridisegnare automaticamente l'interfaccia quando un dato cambia.
+
+### 2. Lo stato calcolato due volte
+È impossibile che ci sia un'incongruenza perché entrambe le parti dell'interfaccia derivano dalla **stessa unica fonte di verità** (l'array `servers` passato da `App`) e usano la **stessa funzione pura** (`statoServer`). Una funzione pura, a parità di input, restituisce sempre lo stesso identico risultato: poiché né `Riepilogo` né `SchedaServer` modificano i dati che ricevono, il calcolo dello stato per ogni server produce inevitabilmente lo stesso esito sia quando viene contato sia quando viene disegnato.
+
+### 3. Chi riceve cosa (esempio: `BadgeStato`)
+Passare a `BadgeStato` soltanto la stringa `stato` (invece dell'intero oggetto `server`) rende il componente più **semplice, autonomo e riutilizzabile**. `BadgeStato` non ha bisogno di sapere come è fatto un server, né come si calcola lo stato dalle soglie della CPU: si limita a ricevere una stringa e a mostrarla con il colore giusto (principio del minimo privilegio / separazione delle responsabilità). In questo modo, se in futuro cambiasse la struttura dell'oggetto `server` o la regola di calcolo in `statoServer`, non dovremmo modificare minimamente `BadgeStato`, e potremmo persino riutilizzarlo per mostrare lo stato di altri elementi che non sono server.
